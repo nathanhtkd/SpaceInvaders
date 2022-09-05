@@ -35,6 +35,8 @@ banner = pygame.transform.scale(pygame.image.load(os.path.join("assets", "banner
 # arcade logo
 arcade = pygame.transform.scale(pygame.image.load(os.path.join("assets", "arcade.png")), (350, 263))
 
+deathImage = pygame.transform.scale(pygame.image.load(os.path.join("assets", "death.png")), (250, 250))
+
 class Laser:
     def __init__ (self, x, y, img):
         self.x = x
@@ -276,9 +278,7 @@ def main():
             # if enemy gets off the screen
             elif enemy.y + enemy.getHeight() > height:
                 lives -= 1 
-                enemies.remove(enemy)
-                
-                
+                enemies.remove(enemy)  
         player.moveLasers(-laserVelocity, enemies)
         
 def retry():
@@ -287,6 +287,7 @@ def retry():
     while run:
         retryLabel = retryFont.render("Press r to restart the game!", 1, (255,255,255))
         window.blit(retryLabel, (width / 2 - retryLabel.get_width() / 2, 470))
+        window.blit(deathImage, (250, 70))
         pygame.display.update()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
