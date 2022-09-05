@@ -1,6 +1,7 @@
 import pygame
 import os
 import random
+import sys
 
 pygame.init()
 pygame.font.init() # initialize font 
@@ -206,6 +207,7 @@ def main():
         if lost:
             lostLabel = lost_font.render("You lost!", 1, (255,255,255))
             window.blit(lostLabel, (width / 2 - lostLabel.get_width() / 2, 350))
+            retry()
         
         pygame.display.update()
         
@@ -242,7 +244,8 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
                 pygame.quit()
-                
+                sys.exit()
+
         keys = pygame.key.get_pressed()
         if keys[pygame.K_a] and player.x - playerVelocity > 0: # left
             player.x -= playerVelocity
@@ -278,6 +281,22 @@ def main():
                 
         player.moveLasers(-laserVelocity, enemies)
         
+def retry():
+    run = True
+    retryFont = pygame.font.SysFont("calibri" , 40)
+    while run:
+        retryLabel = retryFont.render("Press r to restart the game!", 1, (255,255,255))
+        window.blit(retryLabel, (width / 2 - retryLabel.get_width() / 2, 470))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                pygame.quit()
+                sys.exit()
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_r]:
+                mainMenu()
+       
 
 def mainMenu():
     run = True
@@ -293,6 +312,8 @@ def mainMenu():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+                pygame.quit()
+                sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                     main()                   
     pygame.quit()
